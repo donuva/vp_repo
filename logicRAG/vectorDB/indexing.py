@@ -10,11 +10,9 @@ def create_embedding(chunk, model="text-embedding-3-small"):
     response = openai.Embedding.create(input=chunk, model=model)
     return response['data'][0]['embedding']
 
-#Create embeddings using OpenAI
 def create_embeddings(text_chunks, model="text-embedding-3-small", max_workers=5):
-    embeddings = [None] * len(text_chunks)  # Preallocate a list to store embeddings in order
+    embeddings = [None] * len(text_chunks)
     
-    # Use ThreadPoolExecutor to parallelize the task
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_index = {executor.submit(create_embedding, chunk, model): index for index, chunk in enumerate(text_chunks)}
 
@@ -32,7 +30,6 @@ def vectordb(embedding_dim: int = 1536):
     return index
 
 def store_embeddings_faiss(embeddings, index):    
-    # Convert embeddings to numpy array and add to FAISS
     embeddings_np = np.array(embeddings).astype('float32')
     index.add(embeddings_np)
 
