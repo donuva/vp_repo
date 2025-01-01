@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "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"#os.getenv("OPENAI_API_KEY")
 
 def get_gpt_response(memory_variables, prompt):
     # Extract the history (messages) from the memory variables (dict)
