@@ -21,16 +21,6 @@ def create_embedding(chunk):
         model_output = model(**encode_input)
         return cls_pooling(model_output)
 
-#openai.api_key = "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"
-#"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"
-#"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"
-# vo = voyageai.Client(api_key="pa-rahp_-Q37-swCcgCCrUC6UBasPNPIzluZOEaOkaSugw")
-
-# def create_embedding(chunk, model="voyage-lite-01"):    
-#     response = vo.embed(chunk, model=model, input_type="document")
-#     #print("response shape la ", response.embeddings[0])
-#     return response.embeddings#['data'][0]['embedding']
-
 def create_embeddings(text_chunks, model="", max_workers=5):
     embeddings = [None] * len(text_chunks)
     

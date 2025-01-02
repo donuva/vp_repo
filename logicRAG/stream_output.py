@@ -6,8 +6,7 @@ from huggingface_hub import InferenceClient
 
 
 client = InferenceClient(api_key="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")
-#load_dotenv()
-#openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 def get_gpt_response(memory_variables, prompt):
     # Extract the history (messages) from the memory variables (dict)
