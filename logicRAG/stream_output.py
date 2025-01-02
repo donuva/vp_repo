@@ -1,10 +1,11 @@
 import openai
 from dotenv import load_dotenv
 import os
+from together import Together
 
-load_dotenv()
-
-openai.api_key = "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"#os.getenv("OPENAI_API_KEY")
+client = Together(api_key="LA-4069dea8c269422ab75127cb874bf69fa4824d2ec85d4505928973f55a2c321c")
+#load_dotenv()
+#openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_gpt_response(memory_variables, prompt):
     # Extract the history (messages) from the memory variables (dict)
@@ -23,3 +24,31 @@ def get_gpt_response(memory_variables, prompt):
         full_response += chunk_message
         yield chunk_message
     return history
+
+def get_llama_response(memory_variables, prompt):
+    history = memory_variables.get("chat_history", [])
+    
+    print(history.shape)
+    # response = client.chat.completions.create(
+    #     model="meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
+    #     messages= [
+    #         {
+    #     "role": "user",
+    #     "content": [
+    #         {"type": "text", "text": query}, #query
+    #         {
+    #         "type": "image_url",
+    #         "image_url": {
+    #             "url": "",#"data:image/jpeg;base64,{returned_page}", #retrieved page image
+    #         },
+    #         }, ]
+    #         }  
+    #     ]
+    # )
+
+    # # full_response = ""
+    # # for chunk in response:
+    # #     chunk_message = chunk['choices'][0]['delta'].get('content', '')
+    # #     full_response += chunk_message
+    # #     yield chunk_message
+    # return history
