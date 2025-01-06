@@ -30,7 +30,7 @@ def create_embeddings(text_chunks, model="", max_workers=5):
         for future in as_completed(future_to_index):
             index = future_to_index[future]  
             try:
-                print("future result is : ", future.result().shape)
+                #print("future result is : ", future.result().shape)
                 embeddings[index] = future.result()  
             except Exception as e:
                 print(f"Error processing chunk at index {index}: {e}")

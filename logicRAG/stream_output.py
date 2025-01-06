@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 from together import Together
 from huggingface_hub import InferenceClient
-
+import copy
 
 client = InferenceClient(api_key="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")
 
@@ -26,20 +26,28 @@ def get_gpt_response(memory_variables, prompt):
         yield chunk_message
     return history
 
-def get_llama_response(memory_variables, prompt):
+def get_llama_response(memory_variables, current_retrived_docs, prompt):
     history = memory_variables.get("chat_history", [])
+    temp_history = copy.deepcopy(history)
+    temp_history.append(current_retrived_docs)
     
-    #print(history)
+    #print("ORIGIN HISTORY IS : ",history)
+    #print("TEMP HISTORY IS : ",temp_history)
     response = client.chat.completions.create(
         model="meta-llama/Llama-3.2-11B-Vision-Instruct",
-        messages=history,
+        messages=temp_history,
         max_tokens=500,
         stream=True
     )
     #print("RESPONSE LÀ : ", response)
     full_response = ""
+    stepi = 0
     for chunk in response:
         chunk_message = chunk['choices'][0]['delta'].get('content', '')
+        #stepi += 1
+        #print("AT STEP : ",stepi, "CHUNK MESSAGE: ", chunk_message)
         full_response += chunk_message
         yield chunk_message
+    
+    #print("FULL RESPONSE: ", full_response)
     return history
