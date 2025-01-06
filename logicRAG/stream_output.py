@@ -26,6 +26,22 @@ def get_gpt_response(memory_variables, prompt):
         yield chunk_message
     return history
 
+def intergrate_context(lastest_summary, current_chunks):
+    prompt = [
+        {
+            "role": "user",
+            "content": f"Current Source: {current_chunks}" + f"summary of previous source{lastest_summary}" + "You need to read current source text and summary of previous source text, and generate a summary to include them both, cover all important infomation",
+        }
+    ]
+    
+    response = client.chat.completions.create(
+        model="meta-llama/Llama-3.2-11B-Vision-Instruct",
+        messages=prompt,
+        max_tokens=500,
+        stream=False
+    )
+    return response['choices'][0]['message']['content'] 
+
 def get_llama_response(memory_variables, current_retrived_docs, prompt):
     history = memory_variables.get("chat_history", [])
     temp_history = copy.deepcopy(history)
