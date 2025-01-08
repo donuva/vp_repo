@@ -26,11 +26,15 @@ def get_gpt_response(memory_variables, prompt):
         yield chunk_message
     return history
 
-def intergrate_context(lastest_summary, current_chunks):
+def intergrate_context(intergrate_list):
+    all_content = ""
+    for content in intergrate_list:
+        all_content += f'One Source is : {content} and'
+
     prompt = [
         {
             "role": "user",
-            "content": f"Current Source: {current_chunks}" + f"summary of previous source{lastest_summary}" + "You need to read current source text and summary of previous source text, and generate a summary to include them both, cover all important infomation",
+            "content": all_content + "You need to read current source text and summary of previous source text, and generate a summary to include them both, cover all important infomation",
         }
     ]
     
