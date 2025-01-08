@@ -36,9 +36,9 @@ def create_embeddings(text_chunks, model="", max_workers=5):
                 print(f"Error processing chunk at index {index}: {e}")
         return embeddings
 
-def vectordb(embedding_dim: int = 384): # dim cũ là 1536
+def vectordb(embedding_dim: int = 384): # dim cũ là 384
     # Initialize FAISS index for L2 distance
-    index = faiss.IndexFlatL2(384) #khởi tạo list vector dim=1536 
+    index = faiss.IndexFlatL2(384) #khởi tạo list vector dim=384, độ đo để tính similarity là L2
     
     return index
 
