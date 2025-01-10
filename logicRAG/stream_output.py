@@ -5,7 +5,7 @@ from together import Together
 from huggingface_hub import InferenceClient
 import copy
 
-client = InferenceClient(api_key="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")
+client = InferenceClient(api_key="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")
 
 
 def get_gpt_response(memory_variables, prompt):
